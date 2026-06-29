@@ -48,13 +48,10 @@ def generate_launch_description():
         'ahrs_pkg_dir',
         default=os.path.join(get_package_share_directory('stella_ahrs'), 'launch'))
 
-    lidar_pkg_dir = LaunchConfiguration(
-        'lidar_pkg_dir',
-        default=os.path.join(get_package_share_directory('sllidar_ros2'), 'launch'))
-
-    lidar2_pkg_dir = LaunchConfiguration(
-        'lidar2_pkg_dir',
-        default=os.path.join(get_package_share_directory('sllidar2_ros2'), 'launch'))
+    # YDLIDAR X4 (N1 driver). Replaces the two SLAMTEC sllidar lidars.
+    ydlidar_pkg_dir = LaunchConfiguration(
+        'ydlidar_pkg_dir',
+        default=os.path.join(get_package_share_directory('ydlidar'), 'launch'))
 
     depth_pkg_dir = LaunchConfiguration(
         'depth_pkg_dir',
@@ -102,21 +99,9 @@ def generate_launch_description():
             PythonLaunchDescriptionSource([ahrs_pkg_dir, '/stella_ahrs_launch.py'])
         ),
 
-        # Upper lidar launch
+        # YDLIDAR X4 launch (single lidar, publishes /scan on frame base_scan)
         IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([lidar_pkg_dir, '/sllidar_c1_launch.py'])
-        ),
-
-        # Bottom lidar launch
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([lidar2_pkg_dir, '/sllidar_c1_launch.py']),
-            condition=IfCondition('true' if launch_lidar2 else 'false')
-        ),
-
-        # Bottom lidar filter launch
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([lidar2_pkg_dir, '/laser_filter_launch.py']),
-            condition=IfCondition('true' if launch_lidar2 else 'false')
+            PythonLaunchDescriptionSource([ydlidar_pkg_dir, '/ydlidar_launch.py'])
         ),
 
         # Default realsense launch
