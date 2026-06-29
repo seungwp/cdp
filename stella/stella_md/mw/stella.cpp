@@ -101,9 +101,9 @@ int stella_setting(int select)
         stella_n5.velocity_i_gain[channel_2] = 0.002;
 
         // 로봇 기구학 셋팅
-        Differential_MobileRobot_SetValue.axle_length   = 0.36;            // 바퀴간 거리             (m)        
-        Differential_MobileRobot_SetValue.wheel_radius  = 0.0875;           // 바퀴 반지름             (m)        
-        Differential_MobileRobot_SetValue.gear_ratio    = 51;        // 모터회전수 / 바퀴회전수   (감속비율) 
+        Differential_MobileRobot_SetValue.axle_length   = 0.33;            // 바퀴간 거리             (m)  [N1 차체]
+        Differential_MobileRobot_SetValue.wheel_radius  = 0.0875;           // 바퀴 반지름             (m)
+        Differential_MobileRobot_SetValue.gear_ratio    = 27;        // 모터회전수 / 바퀴회전수   (감속비율) [N1=27, N5=51]
 
         // 적용
         Set_MotorConfiguration(channel_1, &stella_n5);
